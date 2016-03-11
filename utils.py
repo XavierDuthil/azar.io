@@ -18,7 +18,6 @@ def random_coordinates(maxWidth, maxHeight):
 
 def get_vector(source_position, target_position):
     vector = tuple(map(operator.sub, source_position, target_position))
-    print(vector)
 
     # Calculate position differences
     xDiff = vector[0]
@@ -34,8 +33,7 @@ def get_vector(source_position, target_position):
             direction += math.pi
 
     # Convert to Degrees
-    direction_degrees = direction * 180 / math.pi
-    print(direction_degrees)
+    # direction_degrees = direction * 180 / math.pi
 
     # Calculate distance
     if xDiff == 0 and yDiff == 0:

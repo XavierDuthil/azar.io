@@ -1,4 +1,3 @@
-import pygame
 import math
 import settings
 import utils
@@ -51,9 +50,14 @@ class Bubble:
             x += x_translation
             y += y_translation
 
+            # Update the cell position
+            cell.rect.center = (x, y)
+
             # Apply forces
-            # cell.calculate_forces()
-            # cell.apply_forces()
+            cell.calculate_local_forces()
+            cell.apply_forces()
+            x += -cell.speed * math.sin(cell.direction)
+            y += -cell.speed * math.cos(cell.direction)
 
             # Handle edge collision
             x = max(0, x)
