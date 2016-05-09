@@ -3,14 +3,13 @@ from pygame.locals import Rect
 
 
 class Cell:
-    rect = Rect((0, 0), (0, 0))
-    neighbors = []
-    local_forces = []
-    speed = 0
-    direction = 0
-
     def __init__(self, bubble):
         self.owner = bubble
+        self.rect = Rect((0, 0), (0, 0))
+        self.neighbors = []
+        self.local_forces = []
+        self.speed = 0
+        self.direction = 0
 
     # def pull_neighbors(self):
     #     for neighbor in neighbors:
