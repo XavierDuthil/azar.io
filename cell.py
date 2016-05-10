@@ -5,13 +5,14 @@ from pygame.locals import Rect
 
 
 class Cell:
-    def __init__(self, bubble):
+    def __init__(self, bubble, angle):
         self.owner = bubble
         self.rect = Rect((0, 0), (0, 0))
         self.neighbors = []
         self.local_forces = []
         self.speed = 0
         self.direction = 0
+        self.angle = angle
 
     # def pull_neighbors(self):
     #     for neighbor in neighbors:
@@ -20,9 +21,9 @@ class Cell:
     def calculate_local_forces(self):
         # Gravitation around the bubble
         direction, distance = utils.get_vector(self.owner.rect.center, self.rect.center)
-
         wanted_gravitation_distance = self.owner.radius
-        gravitation_pull_or_push = wanted_gravitation_distance - distance
+        gravitation_difference = wanted_gravitation_distance - distance
+        gravitation_pull_or_push = math.copysign(gravitation_difference ** 2, gravitation_difference)
         self.local_forces.append((direction, gravitation_pull_or_push / 1000 * settings.CELL_GRAVITATION_FORCE))
 
         # Neighbor cells pull

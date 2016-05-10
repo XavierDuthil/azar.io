@@ -113,7 +113,7 @@ class Bubble:
             cell_x = self.rect.x + self.radius * math.cos(angle)
             cell_y = self.rect.y + self.radius * math.sin(angle)
 
-            cell = Cell(self)
+            cell = Cell(self, angle)
             cell.rect = Rect((cell_x, cell_y), (0, 0))
 
             self.shell_cells.append(cell)
