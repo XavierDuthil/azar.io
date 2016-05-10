@@ -1,5 +1,5 @@
 __author__ = "Xavier Portable"
-__date__ = "$10 mars 2016 15:54:07$"
+__date__ = "$9 mai 2016 17:01:37$"
 
 from setuptools import setup, find_packages
 

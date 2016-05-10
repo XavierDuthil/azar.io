@@ -29,8 +29,8 @@ class Bubble:
 
         # Set new position
         x, y = self.rect.center
-        x += -self.speed * math.sin(self.direction)
-        y += -self.speed * math.cos(self.direction)
+        x += self.speed * math.sin(self.direction)
+        y += self.speed * math.cos(self.direction)
 
         # Handle edge collision
         x = max(0, x)
@@ -56,8 +56,9 @@ class Bubble:
             # Apply forces
             cell.calculate_local_forces()
             cell.apply_forces()
-            x += -cell.speed * math.sin(cell.direction)
-            y += -cell.speed * math.cos(cell.direction)
+
+            x += cell.speed * math.sin(cell.direction)
+            y += cell.speed * math.cos(cell.direction)
 
             # Handle edge collision
             x = max(0, x)
@@ -78,7 +79,7 @@ class Bubble:
         # Calculate speed from volume
 
     def set_movement(self, mouse_position):
-        direction, distance = utils.get_vector(mouse_position, self.VIEW_CENTER)
+        direction, distance = utils.get_vector(self.VIEW_CENTER, mouse_position)
         self.direction = direction
 
         # Calculate move speed in % (relative to distance between cursor and center)
@@ -101,7 +102,7 @@ class Bubble:
 
     def generate_shell(self):
         self.shell_cells = []
-        r = 8 * self.radius / 5
+        # r = 8 * self.radius / 5
 
         number_cells = 30
         increment = 2 * math.pi / number_cells
