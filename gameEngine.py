@@ -3,6 +3,7 @@ import sys
 import math
 from pygame.locals import *
 from pygame.gfxdraw import *
+import time
 # from multiprocessing import Pool
 
 from bubble import Bubble
@@ -19,6 +20,7 @@ class GameEngine:
         self.surface = surface
         self.player = None
         self.camera = None
+        self.standby = False
 
     def start(self):
         # standby = True
@@ -40,18 +42,37 @@ class GameEngine:
 
     def run(self):
         deltat = self.clock.tick(settings.FRAMES_PER_SECOND)
+        input_increase_size = False
+        input_decrease_size = False
 
         # USER INPUT
         for event in pygame.event.get():
             if not hasattr(event, 'key'):
                 continue
-            # down = event.type == KEYDOWN
-            if event.key == K_ESCAPE:
+
+        if pygame.key.get_focused():
+            if pygame.key.get_pressed()[K_ESCAPE]:
                 sys.exit(0)
-            # elif event.key == K_SPACE: standby = True
+            elif pygame.key.get_pressed()[K_KP_PLUS]:
+                input_increase_size = True
+            elif pygame.key.get_pressed()[K_KP_MINUS]:
+                input_decrease_size = True
+            elif pygame.key.get_pressed()[K_p]:
+                self.standby = not self.standby
 
         # UPDATE
-        # if standby: continue
+        if self.standby:
+            time.sleep(0.5)
+            return
+
+        # Interpret input
+        if input_increase_size:
+            self.player.volume += settings.INPUT_INCREASE_VOLUME_AMOUNT
+        if input_decrease_size:
+            self.player.volume -= settings.INPUT_INCREASE_VOLUME_AMOUNT
+            if self.player.volume < settings.INITIAL_PLAYER_VOLUME:
+                self.player.volume = settings.INITIAL_PLAYER_VOLUME
+
         # Move player
         mouse_position = pygame.mouse.get_pos()
         self.player.set_movement(mouse_position)
@@ -121,6 +142,7 @@ class GameEngine:
         # Shell cells
         for cell in self.player.shell_cells:
             cellRelativeToCamera = self.camera.apply(cell)
+
             pygame.gfxdraw.filled_circle(
                 self.surface,
                 cellRelativeToCamera.x,
@@ -128,5 +150,29 @@ class GameEngine:
                 5,
                 (0, 255, 0)
             )
+
+
+        ### TMP ###
+        cell1 = self.player.shell_cells[0]
+        cellRelativeToCamera = self.camera.apply(cell1)
+        pygame.gfxdraw.filled_circle(
+            self.surface,
+            cellRelativeToCamera.x,
+            cellRelativeToCamera.y,
+            5,
+            (0, 0, 255)
+        )
+
+        for cell in cell1.neighbors:
+            cellRelativeToCamera = self.camera.apply(cell)
+            pygame.gfxdraw.filled_circle(
+                self.surface,
+                cellRelativeToCamera.x,
+                cellRelativeToCamera.y,
+                5,
+                (0, 255, 255)
+            )
+
+        ### TMP ###
 
         pygame.display.update()

@@ -9,13 +9,13 @@ from pygame.locals import *
 class Bubble:
     VIEW_CENTER = (settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2)
 
-    volume = 20
-    radius = 20
-    maxSpeed = 10
-    color = (255, 0, 0)
-    shell_cells = []
-
     def __init__(self, position):
+        self.volume = settings.INITIAL_PLAYER_VOLUME
+        self.radius = 20
+        self.maxSpeed = 10
+        self.color = (255, 0, 0)
+        self.shell_cells = []
+
         # pygame.sprite.Sprite.__init__(self)
         # self.src_image = pygame.image.load(image)
         self.rect = Rect(position, (0, 0))
