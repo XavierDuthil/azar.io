@@ -49,20 +49,19 @@ class GameEngine:
         for event in pygame.event.get():
             if not hasattr(event, 'key'):
                 continue
-
-        if pygame.key.get_focused():
-            if pygame.key.get_pressed()[K_ESCAPE]:
-                sys.exit(0)
-            elif pygame.key.get_pressed()[K_KP_PLUS]:
-                input_increase_size = True
-            elif pygame.key.get_pressed()[K_KP_MINUS]:
-                input_decrease_size = True
-            elif pygame.key.get_pressed()[K_p]:
-                self.standby = not self.standby
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_ESCAPE:
+                    sys.exit(0)
+                elif event.key == K_KP_PLUS:
+                    input_increase_size = True
+                elif event.key == K_KP_MINUS:
+                    input_decrease_size = True
+                elif event.key == K_p:
+                    self.standby = not self.standby
 
         # UPDATE
         if self.standby:
-            time.sleep(0.5)
+            time.sleep(0.1)
             return
 
         # Interpret input
