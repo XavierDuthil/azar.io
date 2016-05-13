@@ -1,8 +1,9 @@
 import pygame
-from pygame.locals import *
+import sys
 import settings
-
+from pygame.locals import *
 from gameEngine import GameEngine
+
 
 if __name__ == "__main__":
     # INITIALISATION
@@ -17,3 +18,5 @@ if __name__ == "__main__":
 
     # RUN
     gameEngine.start()
+    pygame.quit()
+    sys.exit()

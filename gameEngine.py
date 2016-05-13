@@ -21,6 +21,7 @@ class GameEngine:
         self.player = None
         self.camera = None
         self.standby = False
+        self.exit = False
 
     def start(self):
         # standby = True
@@ -37,7 +38,7 @@ class GameEngine:
         for i in range(settings.INITIAL_DOTS):
             self.dots.append(Dot())
 
-        while 1:
+        while not self.exit:
             self.run()
 
     def run(self):
@@ -51,7 +52,7 @@ class GameEngine:
                 continue
             if event.type == pygame.KEYDOWN:
                 if event.key == K_ESCAPE:
-                    sys.exit(0)
+                    self.exit = True
                 elif event.key == K_KP_PLUS:
                     input_increase_size = True
                 elif event.key == K_KP_MINUS:
