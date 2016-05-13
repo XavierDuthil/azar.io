@@ -23,7 +23,12 @@ class Cell:
         direction, distance = utils.get_vector(self.owner.rect.center, self.rect.center)
         wanted_gravitation_distance = self.owner.radius
         gravitation_difference = wanted_gravitation_distance - distance
-        gravitation_pull_or_push = math.copysign(gravitation_difference ** 2, gravitation_difference)
+
+        # 
+        if gravitation_difference <= 50:
+            gravitation_pull_or_push = 50 * gravitation_difference
+        else:
+            gravitation_pull_or_push = math.copysign(gravitation_difference ** 2, gravitation_difference)
         self.local_forces.append((direction, gravitation_pull_or_push / 1000 * settings.CELL_GRAVITATION_FORCE))
 
         # Neighbor cells pull
