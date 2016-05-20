@@ -95,7 +95,8 @@ class GameEngine:
                 self.dots.remove(dot)
 
         # Dots generation
-        self.dots.append(Dot())
+        if len(self.dots) < settings.MAX_DOTS:
+            self.dots.append(Dot())
 
         # RENDERING
         # Camera
