@@ -19,17 +19,16 @@ class Cell:
     #         neighbor.forces_applied.append(())
 
     def calculate_local_forces(self):
-        # Gravitation around the bubble
-        direction, distance = utils.get_vector(self.owner.rect.center, self.rect.center)
-        wanted_gravitation_distance = self.owner.radius
-        gravitation_difference = wanted_gravitation_distance - distance
+        # Gravitation pull toward resting cell position (at the right angle and distance)
+        resting_position = (self.owner.rect.x + math.cos(self.angle) * self.owner.radius, self.owner.rect.y + math.sin(self.angle) * self.owner.radius)
+        direction, distance = utils.get_vector(self.rect.center, resting_position)
 
-        # 
-        if gravitation_difference <= 50:
-            gravitation_pull_or_push = 50 * gravitation_difference
+        # Reinforced force if close
+        if distance <= 50:
+            gravitation_pull = 50 * distance
         else:
-            gravitation_pull_or_push = math.copysign(gravitation_difference ** 2, gravitation_difference)
-        self.local_forces.append((direction, gravitation_pull_or_push / 1000 * settings.CELL_GRAVITATION_FORCE))
+            gravitation_pull = math.copysign(distance ** 2, distance)
+        self.local_forces.append((direction, gravitation_pull / 1000 * settings.CELL_GRAVITATION_FORCE))
 
         # Neighbor cells pull
         for neighbor in self.neighbors:
