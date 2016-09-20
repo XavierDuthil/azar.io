@@ -121,7 +121,7 @@ class GameEngine:
         # Visible Dots
         for dot in self.dots:
             rectRelativeToCamera = self.camera.apply(dot)
-            if self.camera.isVisible(rectRelativeToCamera):
+            if self.camera.is_visible(rectRelativeToCamera):
                 pygame.gfxdraw.filled_circle(
                     self.surface,
                     rectRelativeToCamera.x,

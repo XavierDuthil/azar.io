@@ -19,7 +19,7 @@ class Camera(object):
         top = target_rect.top - (self.levelHeight / 2)
         return Rect(left, top, self.state.width, self.state.height)
 
-    def isVisible(self, relative_position, radius=20):
+    def is_visible(self, relative_position, radius=20):
         if (
             relative_position.x < 0 - radius or
             relative_position.y < 0 - radius or
