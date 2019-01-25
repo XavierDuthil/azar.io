@@ -69,12 +69,12 @@ class Bubble:
             # Update the cell position
             cell.rect.center = (x, y)
 
-        # Volume loss
-        if (self.volume > 50):
-            self.volume -= self.volume / 30000
+        # # Volume loss
+        # if (self.volume > 50):
+        #     self.volume -= self.volume / 30000
 
-        # Calculate radius from volume
-        self.radius = round(self.volume)
+        # Calculate radius from shell circumference
+        self.radius = round(len(self.shell_cells) * settings.CELL_RADIUS / math.pi)
 
         # Calculate speed from volume
 
@@ -99,26 +99,38 @@ class Bubble:
 
     def eat(self, dot):
         self.volume += dot.volume
+        new_cell = Cell(self, x=dot.rect.x, y=dot.rect.y)
+        self.insertCellInShell(new_cell)
 
     def generate_shell(self, number_cells):
         self.shell_cells = []
-        # r = 8 * self.radius / 5
 
         increment = 2 * math.pi / number_cells
 
         for i in range(0, number_cells):
             angle = increment * i
-
-            cell_x = self.rect.x + self.radius * math.cos(angle)
-            cell_y = self.rect.y + self.radius * math.sin(angle)
-
-            cell = Cell(self, angle)
-            cell.rect = Rect((cell_x, cell_y), (0, 0))
-
+            cell = Cell(self, angle=angle)
             self.shell_cells.append(cell)
 
+        self.reset_neighbors()
+
+    def reset_neighbors(self):
         # Set neighbors
         for index, cell in enumerate(self.shell_cells):
             previous_neighbor = self.shell_cells[(index - 1) % len(self.shell_cells)]
             next_neighbor = self.shell_cells[(index + 1) % len(self.shell_cells)]
             self.shell_cells[index].neighbors = (previous_neighbor, next_neighbor)
+
+    def insertCellInShell(self, new_cell):
+        right_neighbor_index = 0
+        for index, cell in enumerate(self.shell_cells):
+            if cell.angle > new_cell.angle:
+                right_neighbor_index = index
+                break
+
+        if right_neighbor_index:
+            self.shell_cells.insert(right_neighbor_index, new_cell)
+        else:
+            self.shell_cells.append(new_cell)
+
+        self.reset_neighbors()

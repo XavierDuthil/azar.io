@@ -148,7 +148,7 @@ class GameEngine:
                 self.surface,
                 cellRelativeToCamera.x,
                 cellRelativeToCamera.y,
-                5,
+                settings.CELL_RADIUS,
                 (0, 255, 0)
             )
 
