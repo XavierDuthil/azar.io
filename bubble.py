@@ -21,7 +21,7 @@ class Bubble:
         self.rect = Rect(position, (0, 0))
         self.speed = self.direction = 0
 
-        self.generate_shell()
+        self.generate_shell(settings.INITIAL_PLAYER_CELLS_COUNT)
 
     def update(self, deltat):
         # Calculate speed
@@ -100,11 +100,10 @@ class Bubble:
     def eat(self, dot):
         self.volume += dot.volume
 
-    def generate_shell(self):
+    def generate_shell(self, number_cells):
         self.shell_cells = []
         # r = 8 * self.radius / 5
 
-        number_cells = 30
         increment = 2 * math.pi / number_cells
 
         for i in range(0, number_cells):
