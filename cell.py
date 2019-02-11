@@ -5,13 +5,14 @@ from pygame.locals import Rect
 
 
 class Cell:
-    def __init__(self, bubble, angle=None, x=None, y=None):
+    def __init__(self, bubble, angle=None, x=None, y=None, color=None):
         self.owner = bubble
         self.rect = Rect((0, 0), (0, 0))
         self.neighbors = []
         self.local_forces = []
         self.speed = 0
         self.direction = 0
+        self.color = color or (0, 255, 0)
 
         if angle is None:
             if x is None or y is None:

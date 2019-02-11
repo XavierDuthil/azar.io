@@ -99,7 +99,7 @@ class Bubble:
 
     def eat(self, dot):
         self.volume += dot.volume
-        new_cell = Cell(self, x=dot.rect.x, y=dot.rect.y)
+        new_cell = Cell(self, x=dot.rect.x, y=dot.rect.y, color=dot.color)
         self.insertCellInShell(new_cell)
 
     def generate_shell(self, number_cells):

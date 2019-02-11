@@ -149,7 +149,7 @@ class GameEngine:
                 cellRelativeToCamera.x,
                 cellRelativeToCamera.y,
                 settings.CELL_RADIUS,
-                (0, 255, 0)
+                cell.color
             )
 
 
